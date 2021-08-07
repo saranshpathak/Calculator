@@ -21,16 +21,14 @@ class Calculator extends Component {
     }${buttonPressed}`;
     this.setState({ expression: newExpression });
 
-     let actualCharacter = buttonPressed;
+    let actualCharacter = buttonPressed;
     if (buttonPressed === '÷') {
       actualCharacter = '/';
-    } else if(buttonPressed === '×') {
-      
-      actualCharacter='*';
-    } else if(buttonPressed === '−') {
+    } else if (buttonPressed === '×') {
+      actualCharacter = '*';
+    } else if (buttonPressed === '−') {
       actualCharacter = '-';
     } else {
-
     }
     let newActualExpression = `${actualExpression}${actualCharacter}`;
     this.setState({ actualExpression: newActualExpression });
@@ -43,13 +41,50 @@ class Calculator extends Component {
       console.log(e);
     }
   };
+
+  allClear = () => {
+    this.setState({
+      expression: '',
+      result: '',
+      actualExpression: '',
+    });
+  };
+  deleteLastCharacter = () => {
+    const { expression,  actualExpression } = this.state;
+    
+
+     const slicedExpression = expression.slice(0, expression.length -1);
+    const slicedActualExpression = actualExpression.slice(0, expression.length -1);
+    this.setState({
+      expression: slicedExpression,
+      result: '',
+      actualExpression: slicedActualExpression,
+    });
+    if(slicedActualExpression==''){
+      this.setState({
+        expression:'Calculator',
+       // result:'',
+      });
+    }
+    try {
+      this.setState({
+        result: eval(slicedActualExpression).toString(),
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
   render() {
     const { expression, result } = this.state;
     return (
       <View style={styles.calculatorComponent}>
         {' '}
         <Screen expression={expression} result={result} />
-        <Button buttonPressed={this.getButtonPressedValue} />
+        <Button
+          buttonPressed={this.getButtonPressedValue}
+          allClear={this.allClear}
+         deleteLastCharacter={this.deleteLastCharacter}
+        />
       </View>
     );
   }
