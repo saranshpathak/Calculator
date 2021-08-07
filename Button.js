@@ -6,6 +6,7 @@ class Button extends Component {
 
     const{
       buttonPressed,
+      deleteLastCharacter
     } = this.props;
     return (
       <View style={styles.buttonComponent}>
@@ -13,7 +14,8 @@ class Button extends Component {
           <Pressable style={styles.leftSideButton}>
             <Text style={styles.leftSideButtonText}>AC</Text>
           </Pressable>
-          <Pressable style={styles.leftSideButton}>
+          <Pressable style={styles.leftSideButton}
+                onPress={deleteLastCharacter}>>
             <Text style={styles.leftSideButtonText}>DEL</Text>
           </Pressable>
           <Pressable style={styles.leftSideButton}
